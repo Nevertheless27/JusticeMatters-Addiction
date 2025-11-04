@@ -91,7 +91,11 @@
     function joinChat() {
         const userName = userNameInput.value.trim();
         if (userName === '') {
-            alert('Please enter your name to join the chat.');
+            userNameInput.focus();
+            userNameInput.style.borderColor = '#E74C3C';
+            setTimeout(() => {
+                userNameInput.style.borderColor = '';
+            }, 2000);
             return;
         }
 
@@ -104,7 +108,9 @@
         // Add system message
         const joinMessage = document.createElement('div');
         joinMessage.className = 'message system-message';
-        joinMessage.innerHTML = `<p>${userName} joined the chat. Welcome!</p>`;
+        const joinPara = document.createElement('p');
+        joinPara.textContent = `${userName} joined the chat. Welcome!`;
+        joinMessage.appendChild(joinPara);
         chatBox.appendChild(joinMessage);
 
         // Scroll to bottom

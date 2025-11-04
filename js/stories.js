@@ -74,28 +74,45 @@
                 'other': 'Family Member'
             };
 
-            storyCard.innerHTML = `
-                <div class="story-header">
-                    <h3>In Memory of ${escapeHtml(story.lovedOneName)}</h3>
-                    <p class="story-meta">Shared by ${escapeHtml(story.submitterName)} (${relationshipText[story.relationship]}) - ${formatDate(story.timestamp)}</p>
-                </div>
-                <div class="story-content">
-                    <p>${escapeHtml(story.story).replace(/\n/g, '</p><p>')}</p>
-                </div>
-                <div class="story-footer">
-                    ${story.seekingJustice ? '<span class="justice-badge">Seeking Justice</span>' : ''}
-                </div>
-            `;
+            // Create story header
+            const storyHeader = document.createElement('div');
+            storyHeader.className = 'story-header';
+            
+            const storyTitle = document.createElement('h3');
+            storyTitle.textContent = `In Memory of ${story.lovedOneName}`;
+            
+            const storyMeta = document.createElement('p');
+            storyMeta.className = 'story-meta';
+            storyMeta.textContent = `Shared by ${story.submitterName} (${relationshipText[story.relationship]}) - ${formatDate(story.timestamp)}`;
+            
+            storyHeader.appendChild(storyTitle);
+            storyHeader.appendChild(storyMeta);
+            
+            // Create story content
+            const storyContent = document.createElement('div');
+            storyContent.className = 'story-content';
+            
+            const storyPara = document.createElement('p');
+            storyPara.textContent = story.story;
+            storyContent.appendChild(storyPara);
+            
+            // Create story footer
+            const storyFooter = document.createElement('div');
+            storyFooter.className = 'story-footer';
+            
+            if (story.seekingJustice) {
+                const badge = document.createElement('span');
+                badge.className = 'justice-badge';
+                badge.textContent = 'Seeking Justice';
+                storyFooter.appendChild(badge);
+            }
+            
+            storyCard.appendChild(storyHeader);
+            storyCard.appendChild(storyContent);
+            storyCard.appendChild(storyFooter);
             
             storiesContainer.appendChild(storyCard);
         });
-    }
-
-    // Escape HTML to prevent XSS
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
     }
 
     // Handle form submission
@@ -111,7 +128,18 @@
 
         // Validate
         if (!lovedOneName || !relationship || !story || !consent) {
-            alert('Please fill in all required fields and provide consent to share.');
+            // Highlight missing fields
+            if (!lovedOneName) document.getElementById('lovedOneName').style.borderColor = '#E74C3C';
+            if (!relationship) document.getElementById('relationship').style.borderColor = '#E74C3C';
+            if (!story) document.getElementById('story').style.borderColor = '#E74C3C';
+            if (!consent) document.getElementById('consent').parentElement.style.color = '#E74C3C';
+            
+            setTimeout(() => {
+                document.getElementById('lovedOneName').style.borderColor = '';
+                document.getElementById('relationship').style.borderColor = '';
+                document.getElementById('story').style.borderColor = '';
+                document.getElementById('consent').parentElement.style.color = '';
+            }, 2000);
             return;
         }
 
@@ -127,8 +155,17 @@
         // Reset form
         storyForm.reset();
 
-        // Show confirmation
-        alert('Thank you for sharing your story. Your loved one\'s memory will help others feel less alone.');
+        // Show confirmation message
+        const confirmMessage = document.createElement('div');
+        confirmMessage.style.cssText = 'background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid #c3e6cb;';
+        confirmMessage.textContent = 'Thank you for sharing your story. Your loved one\'s memory will help others feel less alone.';
+        
+        const shareStoryContainer = document.querySelector('.share-story-container');
+        shareStoryContainer.insertBefore(confirmMessage, storyForm);
+        
+        setTimeout(() => {
+            confirmMessage.remove();
+        }, 5000);
 
         // Scroll to stories
         document.querySelector('.stories-display').scrollIntoView({ 
