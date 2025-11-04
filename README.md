@@ -38,7 +38,7 @@ For bug reports or feature requests, please open an issue on GitHub.
 For questions, suggestions, or to share your story, please reach out:
 
 - GitHub: [@Nevertheless27](https://github.com/Nevertheless27)
-- Email: (Contact information will be updated soon)
+- Email: journey202t@gmail.com 
 
 ## License
 
