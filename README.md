@@ -4,6 +4,10 @@ This project is dedicated to seeking justice and support for families who have l
 
 Our mission is rooted in compassion and understanding. We recognize that addiction is a disease, not a moral failing, and that those affected—both the individuals struggling and their families—deserve dignity, respect, and access to proper care and legal recourse when negligence or misconduct occurs.
 
+## Resources
+
+- **[Daily Grief Coping Skills (Medication-Free)](./DAILY_GRIEF_COPING_SKILLS.md)**: A practical guide to daily, evidence-based coping strategies for grief that do not require medication—including grounding exercises, journaling, movement, creative expression, community connection, and more.
+
 ## Why This Matters
 
 - **Awareness**: Many families suffer in silence, unaware of their rights or the resources available to them.
