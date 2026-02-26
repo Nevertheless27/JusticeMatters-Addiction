@@ -10,9 +10,9 @@
 
     // Load stories from localStorage
     function loadStories() {
-        const stored = localStorage.getItem('justiceMattersStories');
-        if (stored) {
-            stories = JSON.parse(stored);
+        const storedStoriesData = localStorage.getItem('justiceMattersStories');
+        if (storedStoriesData) {
+            stories = JSON.parse(storedStoriesData);
             renderStories();
         }
     }
@@ -58,14 +58,14 @@
         storiesContainer.innerHTML = '';
 
         // Re-add sample stories
-        sampleStories.forEach(sample => storiesContainer.appendChild(sample));
+        sampleStories.forEach(sampleStoryElement => storiesContainer.appendChild(sampleStoryElement));
 
         // Add user-submitted stories
-        stories.forEach(story => {
-            const storyCard = document.createElement('div');
-            storyCard.className = 'story-card';
+        stories.forEach(storyEntry => {
+            const storyCardElement = document.createElement('div');
+            storyCardElement.className = 'story-card';
             
-            const relationshipText = {
+            const relationshipLabelMap = {
                 'parent': 'Parent',
                 'child': 'Child',
                 'sibling': 'Sibling',
@@ -75,43 +75,43 @@
             };
 
             // Create story header
-            const storyHeader = document.createElement('div');
-            storyHeader.className = 'story-header';
+            const storyHeaderSection = document.createElement('div');
+            storyHeaderSection.className = 'story-header';
             
-            const storyTitle = document.createElement('h3');
-            storyTitle.textContent = `In Memory of ${story.lovedOneName}`;
+            const storyTitleHeading = document.createElement('h3');
+            storyTitleHeading.textContent = `In Memory of ${storyEntry.lovedOneName}`;
             
-            const storyMeta = document.createElement('p');
-            storyMeta.className = 'story-meta';
-            storyMeta.textContent = `Shared by ${story.submitterName} (${relationshipText[story.relationship]}) - ${formatDate(story.timestamp)}`;
+            const storyMetaElement = document.createElement('p');
+            storyMetaElement.className = 'story-meta';
+            storyMetaElement.textContent = `Shared by ${storyEntry.submitterName} (${relationshipLabelMap[storyEntry.relationship]}) - ${formatDate(storyEntry.timestamp)}`;
             
-            storyHeader.appendChild(storyTitle);
-            storyHeader.appendChild(storyMeta);
+            storyHeaderSection.appendChild(storyTitleHeading);
+            storyHeaderSection.appendChild(storyMetaElement);
             
             // Create story content
-            const storyContent = document.createElement('div');
-            storyContent.className = 'story-content';
+            const storyContentSection = document.createElement('div');
+            storyContentSection.className = 'story-content';
             
-            const storyPara = document.createElement('p');
-            storyPara.textContent = story.story;
-            storyContent.appendChild(storyPara);
+            const storyTextParagraph = document.createElement('p');
+            storyTextParagraph.textContent = storyEntry.story;
+            storyContentSection.appendChild(storyTextParagraph);
             
             // Create story footer
-            const storyFooter = document.createElement('div');
-            storyFooter.className = 'story-footer';
+            const storyFooterSection = document.createElement('div');
+            storyFooterSection.className = 'story-footer';
             
-            if (story.seekingJustice) {
-                const badge = document.createElement('span');
-                badge.className = 'justice-badge';
-                badge.textContent = 'Seeking Justice';
-                storyFooter.appendChild(badge);
+            if (storyEntry.seekingJustice) {
+                const seekingJusticeBadge = document.createElement('span');
+                seekingJusticeBadge.className = 'justice-badge';
+                seekingJusticeBadge.textContent = 'Seeking Justice';
+                storyFooterSection.appendChild(seekingJusticeBadge);
             }
             
-            storyCard.appendChild(storyHeader);
-            storyCard.appendChild(storyContent);
-            storyCard.appendChild(storyFooter);
+            storyCardElement.appendChild(storyHeaderSection);
+            storyCardElement.appendChild(storyContentSection);
+            storyCardElement.appendChild(storyFooterSection);
             
-            storiesContainer.appendChild(storyCard);
+            storiesContainer.appendChild(storyCardElement);
         });
     }
 
@@ -149,15 +149,15 @@
         storyForm.reset();
 
         // Show confirmation message
-        const confirmMessage = document.createElement('div');
-        confirmMessage.style.cssText = 'background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid #c3e6cb;';
-        confirmMessage.textContent = 'Thank you for sharing your story. Your loved one\'s memory will help others feel less alone.';
+        const submissionConfirmationElement = document.createElement('div');
+        submissionConfirmationElement.style.cssText = 'background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid #c3e6cb;';
+        submissionConfirmationElement.textContent = 'Thank you for sharing your story. Your loved one\'s memory will help others feel less alone.';
         
         const shareStoryContainer = document.querySelector('.share-story-container');
-        shareStoryContainer.insertBefore(confirmMessage, storyForm);
+        shareStoryContainer.insertBefore(submissionConfirmationElement, storyForm);
         
         setTimeout(() => {
-            confirmMessage.remove();
+            submissionConfirmationElement.remove();
         }, 5000);
 
         // Scroll to stories

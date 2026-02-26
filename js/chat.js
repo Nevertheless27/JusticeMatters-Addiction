@@ -16,9 +16,9 @@
 
     // Load messages from localStorage
     function loadMessages() {
-        const stored = localStorage.getItem('justiceMattersChat');
-        if (stored) {
-            messages = JSON.parse(stored);
+        const storedChatMessages = localStorage.getItem('justiceMattersChat');
+        if (storedChatMessages) {
+            messages = JSON.parse(storedChatMessages);
             renderMessages();
         }
     }
@@ -56,31 +56,31 @@
         chatBox.innerHTML = '';
         
         // Re-add system messages
-        systemMessages.forEach(msg => chatBox.appendChild(msg));
+        systemMessages.forEach(systemMsgElement => chatBox.appendChild(systemMsgElement));
 
         // Add user messages
-        messages.forEach(msg => {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = msg.sender === currentUser ? 'message user-message' : 'message other-message';
+        messages.forEach(chatMsgData => {
+            const chatMessageElement = document.createElement('div');
+            chatMessageElement.className = chatMsgData.sender === currentUser ? 'message user-message' : 'message other-message';
             
-            const senderSpan = document.createElement('div');
-            senderSpan.className = 'message-sender';
-            senderSpan.textContent = msg.sender;
+            const senderNameElement = document.createElement('div');
+            senderNameElement.className = 'message-sender';
+            senderNameElement.textContent = chatMsgData.sender;
             
-            const textP = document.createElement('p');
-            textP.textContent = msg.text;
+            const messageTextParagraph = document.createElement('p');
+            messageTextParagraph.textContent = chatMsgData.text;
             
-            const timeSpan = document.createElement('div');
-            timeSpan.className = 'message-time';
-            timeSpan.textContent = formatTime(msg.timestamp);
+            const messageTimestampElement = document.createElement('div');
+            messageTimestampElement.className = 'message-time';
+            messageTimestampElement.textContent = formatTime(chatMsgData.timestamp);
             
-            if (msg.sender !== currentUser) {
-                messageDiv.appendChild(senderSpan);
+            if (chatMsgData.sender !== currentUser) {
+                chatMessageElement.appendChild(senderNameElement);
             }
-            messageDiv.appendChild(textP);
-            messageDiv.appendChild(timeSpan);
+            chatMessageElement.appendChild(messageTextParagraph);
+            chatMessageElement.appendChild(messageTimestampElement);
             
-            chatBox.appendChild(messageDiv);
+            chatBox.appendChild(chatMessageElement);
         });
 
         scrollToBottom();
@@ -93,26 +93,26 @@
 
     // Join chat
     function joinChat() {
-        const userName = userNameInput.value.trim();
-        if (userName === '') {
+        const enteredUserName = userNameInput.value.trim();
+        if (enteredUserName === '') {
             userNameInput.focus();
             window.JusticeMatters.highlightError(userNameInput);
             return;
         }
 
-        currentUser = userName;
+        currentUser = enteredUserName;
         
         // Hide name input, show message input
         nameInputSection.style.display = 'none';
         messageInputSection.style.display = 'flex';
 
         // Add system message
-        const joinMessage = document.createElement('div');
-        joinMessage.className = 'message system-message';
-        const joinPara = document.createElement('p');
-        joinPara.textContent = `${userName} joined the chat. Welcome!`;
-        joinMessage.appendChild(joinPara);
-        chatBox.appendChild(joinMessage);
+        const joinNotificationElement = document.createElement('div');
+        joinNotificationElement.className = 'message system-message';
+        const joinNotificationParagraph = document.createElement('p');
+        joinNotificationParagraph.textContent = `${enteredUserName} joined the chat. Welcome!`;
+        joinNotificationElement.appendChild(joinNotificationParagraph);
+        chatBox.appendChild(joinNotificationElement);
 
         scrollToBottom();
 
@@ -122,12 +122,12 @@
 
     // Send message
     function sendMessage() {
-        const text = messageInput.value.trim();
-        if (text === '') {
+        const messageText = messageInput.value.trim();
+        if (messageText === '') {
             return;
         }
 
-        addMessage(currentUser, text);
+        addMessage(currentUser, messageText);
         messageInput.value = '';
         messageInput.focus();
     }
@@ -164,9 +164,9 @@
         // Check if we need to add demo messages
         if (messages.length === 0) {
             setTimeout(() => {
-                const randomMessage = demoMessages[Math.floor(Math.random() * demoMessages.length)];
-                if (currentUser && randomMessage.sender !== currentUser) {
-                    addMessage(randomMessage.sender, randomMessage.text);
+                const selectedDemoMessage = demoMessages[Math.floor(Math.random() * demoMessages.length)];
+                if (currentUser && selectedDemoMessage.sender !== currentUser) {
+                    addMessage(selectedDemoMessage.sender, selectedDemoMessage.text);
                 }
             }, 30000); // Add a message after 30 seconds if chat is active
         }
