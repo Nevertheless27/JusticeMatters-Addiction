@@ -83,7 +83,11 @@
             chatBox.appendChild(messageDiv);
         });
 
-        // Scroll to bottom
+        scrollToBottom();
+    }
+
+    // Scroll chat to the bottom
+    function scrollToBottom() {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
@@ -92,10 +96,7 @@
         const userName = userNameInput.value.trim();
         if (userName === '') {
             userNameInput.focus();
-            userNameInput.style.borderColor = '#E74C3C';
-            setTimeout(() => {
-                userNameInput.style.borderColor = '';
-            }, 2000);
+            window.JusticeMatters.highlightError(userNameInput);
             return;
         }
 
@@ -113,8 +114,7 @@
         joinMessage.appendChild(joinPara);
         chatBox.appendChild(joinMessage);
 
-        // Scroll to bottom
-        chatBox.scrollTop = chatBox.scrollHeight;
+        scrollToBottom();
 
         // Focus on message input
         messageInput.focus();
