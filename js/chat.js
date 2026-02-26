@@ -37,7 +37,31 @@
         });
     }
 
-    // Add message to chat
+    // Create a single message DOM element
+    function createMessageElement(msg) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = msg.sender === currentUser ? 'message user-message' : 'message other-message';
+
+        if (msg.sender !== currentUser) {
+            const senderSpan = document.createElement('div');
+            senderSpan.className = 'message-sender';
+            senderSpan.textContent = msg.sender;
+            messageDiv.appendChild(senderSpan);
+        }
+
+        const textP = document.createElement('p');
+        textP.textContent = msg.text;
+        messageDiv.appendChild(textP);
+
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'message-time';
+        timeSpan.textContent = formatTime(msg.timestamp);
+        messageDiv.appendChild(timeSpan);
+
+        return messageDiv;
+    }
+
+    // Add message to chat - appends only the new element instead of re-rendering all
     function addMessage(sender, text, timestamp = Date.now()) {
         const message = {
             sender: sender,
@@ -46,10 +70,11 @@
         };
         messages.push(message);
         saveMessages();
-        renderMessages();
+        chatBox.appendChild(createMessageElement(message));
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Render all messages
+    // Render all messages (used on initial load from localStorage)
     function renderMessages() {
         // Keep system messages and add user messages
         const systemMessages = chatBox.querySelectorAll('.system-message');
@@ -59,29 +84,7 @@
         systemMessages.forEach(msg => chatBox.appendChild(msg));
 
         // Add user messages
-        messages.forEach(msg => {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = msg.sender === currentUser ? 'message user-message' : 'message other-message';
-            
-            const senderSpan = document.createElement('div');
-            senderSpan.className = 'message-sender';
-            senderSpan.textContent = msg.sender;
-            
-            const textP = document.createElement('p');
-            textP.textContent = msg.text;
-            
-            const timeSpan = document.createElement('div');
-            timeSpan.className = 'message-time';
-            timeSpan.textContent = formatTime(msg.timestamp);
-            
-            if (msg.sender !== currentUser) {
-                messageDiv.appendChild(senderSpan);
-            }
-            messageDiv.appendChild(textP);
-            messageDiv.appendChild(timeSpan);
-            
-            chatBox.appendChild(messageDiv);
-        });
+        messages.forEach(msg => chatBox.appendChild(createMessageElement(msg)));
 
         // Scroll to bottom
         chatBox.scrollTop = chatBox.scrollHeight;
