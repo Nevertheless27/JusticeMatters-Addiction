@@ -24,9 +24,9 @@
 
     // Load stories from localStorage
     function loadStories() {
-        const stored = localStorage.getItem('justiceMattersStories');
-        if (stored) {
-            stories = JSON.parse(stored);
+        const storedStoriesData = localStorage.getItem('justiceMattersStories');
+        if (storedStoriesData) {
+            stories = JSON.parse(storedStoriesData);
             renderStories();
         }
     }
@@ -121,10 +121,62 @@
         storiesContainer.innerHTML = '';
 
         // Re-add sample stories
-        sampleStories.forEach(sample => storiesContainer.appendChild(sample));
+        sampleStories.forEach(sampleStoryElement => storiesContainer.appendChild(sampleStoryElement));
 
         // Add user-submitted stories
         stories.forEach(story => storiesContainer.appendChild(createStoryCard(story)));
+        stories.forEach(storyEntry => {
+            const storyCardElement = document.createElement('div');
+            storyCardElement.className = 'story-card';
+            
+            const relationshipLabelMap = {
+                'parent': 'Parent',
+                'child': 'Child',
+                'sibling': 'Sibling',
+                'spouse': 'Spouse/Partner',
+                'friend': 'Friend',
+                'other': 'Family Member'
+            };
+
+            // Create story header
+            const storyHeaderSection = document.createElement('div');
+            storyHeaderSection.className = 'story-header';
+            
+            const storyTitleHeading = document.createElement('h3');
+            storyTitleHeading.textContent = `In Memory of ${storyEntry.lovedOneName}`;
+            
+            const storyMetaElement = document.createElement('p');
+            storyMetaElement.className = 'story-meta';
+            storyMetaElement.textContent = `Shared by ${storyEntry.submitterName} (${relationshipLabelMap[storyEntry.relationship]}) - ${formatDate(storyEntry.timestamp)}`;
+            
+            storyHeaderSection.appendChild(storyTitleHeading);
+            storyHeaderSection.appendChild(storyMetaElement);
+            
+            // Create story content
+            const storyContentSection = document.createElement('div');
+            storyContentSection.className = 'story-content';
+            
+            const storyTextParagraph = document.createElement('p');
+            storyTextParagraph.textContent = storyEntry.story;
+            storyContentSection.appendChild(storyTextParagraph);
+            
+            // Create story footer
+            const storyFooterSection = document.createElement('div');
+            storyFooterSection.className = 'story-footer';
+            
+            if (storyEntry.seekingJustice) {
+                const seekingJusticeBadge = document.createElement('span');
+                seekingJusticeBadge.className = 'justice-badge';
+                seekingJusticeBadge.textContent = 'Seeking Justice';
+                storyFooterSection.appendChild(seekingJusticeBadge);
+            }
+            
+            storyCardElement.appendChild(storyHeaderSection);
+            storyCardElement.appendChild(storyContentSection);
+            storyCardElement.appendChild(storyFooterSection);
+            
+            storiesContainer.appendChild(storyCardElement);
+        });
     }
 
     // Handle form submission
@@ -152,6 +204,10 @@
                 storyEl.style.borderColor = '';
                 consentEl.parentElement.style.color = '';
             }, 2000);
+            if (!lovedOneName) window.JusticeMatters.highlightError(document.getElementById('lovedOneName'));
+            if (!relationship) window.JusticeMatters.highlightError(document.getElementById('relationship'));
+            if (!story) window.JusticeMatters.highlightError(document.getElementById('story'));
+            if (!consent) window.JusticeMatters.highlightError(document.getElementById('consent').parentElement, 'color');
             return;
         }
 
@@ -175,8 +231,15 @@
         const shareStoryContainer = document.querySelector('.share-story-container');
         shareStoryContainer.insertBefore(confirmMessage, storyForm);
 
+        const submissionConfirmationElement = document.createElement('div');
+        submissionConfirmationElement.style.cssText = 'background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid #c3e6cb;';
+        submissionConfirmationElement.textContent = 'Thank you for sharing your story. Your loved one\'s memory will help others feel less alone.';
+        
+        const shareStoryContainer = document.querySelector('.share-story-container');
+        shareStoryContainer.insertBefore(submissionConfirmationElement, storyForm);
+        
         setTimeout(() => {
-            confirmMessage.remove();
+            submissionConfirmationElement.remove();
         }, 5000);
 
         // Scroll to stories
