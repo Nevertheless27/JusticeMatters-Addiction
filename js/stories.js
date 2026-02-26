@@ -129,17 +129,10 @@
         // Validate
         if (!lovedOneName || !relationship || !story || !consent) {
             // Highlight missing fields
-            if (!lovedOneName) document.getElementById('lovedOneName').style.borderColor = '#E74C3C';
-            if (!relationship) document.getElementById('relationship').style.borderColor = '#E74C3C';
-            if (!story) document.getElementById('story').style.borderColor = '#E74C3C';
-            if (!consent) document.getElementById('consent').parentElement.style.color = '#E74C3C';
-            
-            setTimeout(() => {
-                document.getElementById('lovedOneName').style.borderColor = '';
-                document.getElementById('relationship').style.borderColor = '';
-                document.getElementById('story').style.borderColor = '';
-                document.getElementById('consent').parentElement.style.color = '';
-            }, 2000);
+            if (!lovedOneName) window.JusticeMatters.highlightError(document.getElementById('lovedOneName'));
+            if (!relationship) window.JusticeMatters.highlightError(document.getElementById('relationship'));
+            if (!story) window.JusticeMatters.highlightError(document.getElementById('story'));
+            if (!consent) window.JusticeMatters.highlightError(document.getElementById('consent').parentElement, 'color');
             return;
         }
 
