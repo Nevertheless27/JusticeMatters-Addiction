@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Stories - Justice Matters</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <section class="stories-section">
+            <div class="container">
+                <h1>Family Stories</h1>
+                <p class="section-intro">Honor your loved one's memory by sharing their story. Your words can help others feel less alone and inspire collective action for justice.</p>
+
+                <div class="share-story-container">
+                    <h2>Share Your Story</h2>
+                    <form id="storyForm" class="story-form">
+                        <div class="form-group">
+                            <label for="submitterName">Your Name (optional - you can remain anonymous)</label>
+                            <input type="text" id="submitterName" placeholder="Your name or 'Anonymous'">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lovedOneName">Your Loved One's Name *</label>
+                            <input type="text" id="lovedOneName" placeholder="Their name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="relationship">Your Relationship *</label>
+                            <select id="relationship" required>
+                                <option value="">Select relationship</option>
+                                <option value="parent">Parent</option>
+                                <option value="child">Child</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="spouse">Spouse/Partner</option>
+                                <option value="friend">Friend</option>
+                                <option value="other">Other Family Member</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="story">Their Story *</label>
+                            <textarea id="story" rows="8" placeholder="Share your loved one's story... Tell us about who they were, what happened, and what justice means to you." required></textarea>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="seekingJustice">
+                                I am seeking justice for my loved one
+                            </label>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="consent" required>
+                                I consent to sharing this story publicly to help others *
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Share Story</button>
+                    </form>
+                </div>
+
+                <div class="stories-display">
+                    <h2>Stories of Love and Loss</h2>
+                    <p class="stories-subtitle">These families have shared their experiences to help others heal and to honor their loved ones.</p>
+                    
+                    <div id="storiesContainer" class="stories-grid">
+                        <div class="story-card sample">
+                            <div class="story-header">
+                                <h3>In Memory of Michael</h3>
+                                <p class="story-meta">Shared by Sarah (Mother) - Sample Story</p>
+                            </div>
+                            <div class="story-content">
+                                <p>Michael was a bright light in our lives. He was a loving son, brother, and friend who struggled with addiction but was working hard on his recovery. He thought he was getting help, but someone gave him something laced with fentanyl. He was only 28 years old.</p>
+                                <p>We are seeking justice because no family should go through this pain. Michael's life mattered, and we won't stop fighting until those responsible are held accountable.</p>
+                            </div>
+                            <div class="story-footer">
+                                <span class="justice-badge">Seeking Justice</span>
+                            </div>
+                        </div>
+
+                        <div class="story-card sample">
+                            <div class="story-header">
+                                <h3>Remembering Jennifer</h3>
+                                <p class="story-meta">Shared by Anonymous (Sibling) - Sample Story</p>
+                            </div>
+                            <div class="story-content">
+                                <p>My sister Jennifer was the kindest person I knew. She trusted someone who intentionally harmed her. She didn't ask for what was given to her, and it cost her everything.</p>
+                                <p>I share her story so others know they're not alone in this fight. Together, we can demand accountability and prevent more families from experiencing this devastating loss.</p>
+                            </div>
+                            <div class="story-footer">
+                                <span class="justice-badge">Seeking Justice</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer></footer>
+
+    <script src="js/common.js"></script>
+    <script src="js/stories.js"></script>
+</body>
+</html>

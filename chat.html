@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Chat - Justice Matters</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <section class="chat-section">
+            <div class="container">
+                <h1>Support Chat Room</h1>
+                <p class="chat-intro">Welcome to our safe space. Share your feelings, your grief, and your hopes with others who understand. Everything shared here stays here.</p>
+                
+                <div class="chat-guidelines">
+                    <h3>Community Guidelines</h3>
+                    <ul>
+                        <li>Be respectful and compassionate to all members</li>
+                        <li>Protect everyone's privacy - what's shared here stays here</li>
+                        <li>Share your truth, but be mindful of triggering content</li>
+                        <li>Support each other in seeking justice and healing</li>
+                        <li>Report any concerning behavior to moderators</li>
+                    </ul>
+                </div>
+
+                <div class="chat-container">
+                    <div id="chatBox" class="chat-box">
+                        <div class="message system-message">
+                            <p>Welcome to the Justice Matters support chat. You are not alone.</p>
+                        </div>
+                        <div class="message system-message">
+                            <p>Please enter your name below to join the conversation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <div id="nameInputSection" class="name-input-section">
+                            <input type="text" id="userName" placeholder="Enter your name..." maxlength="50">
+                            <button id="joinBtn" class="btn btn-primary">Join Chat</button>
+                        </div>
+                        
+                        <div id="messageInputSection" class="message-input-section" style="display: none;">
+                            <input type="text" id="messageInput" placeholder="Type your message..." maxlength="500">
+                            <button id="sendBtn" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-info">
+                    <h3>Need Immediate Help?</h3>
+                    <div class="emergency-contacts">
+                        <p><strong>Crisis Support:</strong> National Suicide Prevention Lifeline: 988</p>
+                        <p><strong>Substance Abuse Help:</strong> SAMHSA National Helpline: 1-800-662-4357</p>
+                        <p><strong>Emergency:</strong> Call 911</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer></footer>
+
+    <script src="js/common.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>
